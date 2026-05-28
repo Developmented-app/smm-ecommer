@@ -1,0 +1,24 @@
+# Docker Compose configuration for Angkor SMM Panel
+version: '3.8'
+
+services:
+  smm-panel:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: angkor-smm-panel
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - JWT_SECRET=cambo_smm_panel_jwt_secret_key_8491823
+      # Populate with your real Gemini credentials to activate live AI strategy chat
+      - GEMINI_API_KEY=YOUR_GEMINI_API_KEY_HERE
+    restart: always
+    volumes:
+      # Persistent local database writes
+      - smm_data:/app/.data
+
+volumes:
+  smm_data:
+    driver: local
